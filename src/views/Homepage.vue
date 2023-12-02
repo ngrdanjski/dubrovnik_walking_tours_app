@@ -5,23 +5,24 @@
         <h1 style="font-weight: 800; font-size: 1.8rem; margin: 0">Discover the best of <span style="color: #B82226;">Dubrovnik</span> on a walking tour <span style="color: #B82226;"> with a local expert guide</span></h1>
       </div>
       <div v-if="isToursIsLoaded">
-        <swiper :slides-per-view="1.1">
+        <swiper :slides-per-view="1.2">
           <swiper-slide v-for="tour in allTours">
             <router-link :to="'/tours/'+ tour.slug">
               <ion-card class="tour-item" :class="{'inactive': !tour.isActive }">
                 <img :alt="tour.title" :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + tour.featuredImage" />
                 <ion-card-header class="tour-item__header">
-                  <ion-card-title class="tour-item__title">{{ tour.title }}</ion-card-title>
+                  <ion-card-title class="tour-item__title">{{ tour.title.substring(0, 28) }}</ion-card-title>
                   <ion-card-subtitle class="tour-item__subtitle">{{ tour.duration }}</ion-card-subtitle>
                 </ion-card-header>
-                <ion-card-content class="tour-item__content">{{ tour?.shortDescription }}</ion-card-content>
+                <ion-card-content class="tour-item__content">{{ tour?.shortDescription.substring(0, 64)+"..." }}</ion-card-content>
+                <div class="tour-item__price-wrapper">{{ tour?.price }} €</div>
               </ion-card>
             </router-link>
           </swiper-slide>
         </swiper>
       </div>
 
-      <div class="ion-padding-horizontal">
+      <div class="ion-padding">
         <div class="section section--left">
           <div class="section__title"><span class="section__title-red">7 days</span><br/>a week</div>
           <div class="section__description">We operate 7 days a week All tours start by the Big Onofrio's Fountain</div>
@@ -78,6 +79,8 @@ let isToursIsLoaded = false
 let posts = ref([])
 let allPosts = []
 let isPostsLoaded = false
+
+
 
 onMounted(async () => {
   console.log('Homepages')
@@ -155,5 +158,16 @@ onMounted(async () => {
   width: fit-content;
   font-weight: 300;
   font-size: .8rem !important;
+}
+
+.tour-item__price-wrapper {
+  padding: 10px 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #B82226;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
 }
 </style>

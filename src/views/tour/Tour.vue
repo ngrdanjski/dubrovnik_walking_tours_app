@@ -40,7 +40,27 @@
             <ion-icon aria-hidden="true" :icon="timerOutline" slot="start"></ion-icon>
             <span class="tour__duration-value">{{ singleTour.duration }}</span>
           </div>
-          <h1 class="tour__title" style="padding: 0; margin: 0">{{ singleTour.title }}</h1>
+          <h1 class="tour__title" style="padding: 0; margin: 0">{{ singleTour.fullTitle ? singleTour.fullTitle : singleTour.title }}</h1>
+          <div class="meta-list">
+            <div class="meta-list__item">
+              <span class="meta-list__item-title"><strong>Departure: </strong></span>
+              <div class="meta-list__item-departure">
+                <div class="meta-list__item-departure-item">
+                  <div>Daily at 10:00 | <span>MAY 1 - SEP 30</span></div>
+                </div>
+                <div class="meta-list__item-departure-item">
+                  <div>Daily at 12:00 | <span>APR 1 - OCT 31</span></div>
+                </div>
+                <div class="meta-list__item-departure-item">
+                  <div>Daily at 12:00 | <span>APR 1 - OCT 31</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="meta-list__item">
+              <span class="meta-list__item-title"><strong>Price: </strong> {{ singleTour.price }} €</span>
+            </div>
+          </div>
+          <div class="hr"></div>
           <div class="tour__description" v-html="singleTour.description"></div>
         </div>
       </div>
@@ -194,17 +214,19 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { timerOutline, swapHorizontalOutline } from 'ionicons/icons';
+import { timerOutline, swapHorizontalOutline, cashOutline } from 'ionicons/icons';
 
 let isTourIsLoaded = false
 const singleTour = {
   title: null,
+  fullTitle: null,
   featuredImage: null,
   mediaGallery: null,
   shortDescription: null,
   description: null,
   duration: null,
   price: null,
+  departure: null,
 };
 
 
@@ -236,12 +258,14 @@ onMounted(async () => {
       console.log(responseTour);
 
       singleTour.title = responseTour.title
+      singleTour.fullTitle = responseTour.fullTitle
       singleTour.featuredImage = responseTour.featuredImage
       singleTour.mediaGallery = responseTour.mediaGallery
       singleTour.shortDescription = responseTour.shortDescription
       singleTour.description = responseTour.description
       singleTour.duration = responseTour.duration
       singleTour.price = responseTour.price
+      singleTour.departure = responseTour.departure
 
       isTourIsLoaded = true
 
@@ -272,14 +296,14 @@ onMounted(async () => {
 }
 .tour {}
 .tour__img {
-  height: 260px !important;
+  height: 290px !important;
   object-fit: cover;
 }
 .tour__duration {
   margin-bottom: 10px !important;
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 .tour__duration-value {
@@ -317,5 +341,37 @@ onMounted(async () => {
   font-size: 1.4rem;
   color: #ffffff;
   background-color: rgba(0, 0, 0, 0.60);
+}
+.meta-list {
+  margin-bottom: 15px;
+}
+.meta-list__item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 1.2rem;
+  flex-direction: column;
+}
+.meta-list__item-icon {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+.meta-list__item-title {
+  margin-bottom: 5px;
+}
+.meta-list__item-departure {
+  font-size: 1rem;
+  margin-left: 0px;
+}
+.meta-list__item-departure-item {
+  margin-bottom: 5px;
+}
+.hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(13, 13, 13, 0.30);
 }
 </style>

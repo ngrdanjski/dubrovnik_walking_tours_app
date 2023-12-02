@@ -26,7 +26,20 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
-  
+
+app.config.globalProperties.$filters = {
+  str_limit(value, size) {
+    if (!value) return '';
+    value = value.toString();
+
+    if (value.length <= size) {
+      return value;
+    }
+    return value.substr(0, size) + '...';
+  }
+}
+
 router.isReady().then(() => {
   app.mount('#app');
 });
+
