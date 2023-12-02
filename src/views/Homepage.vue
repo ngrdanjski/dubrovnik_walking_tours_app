@@ -9,7 +9,7 @@
           <swiper-slide v-for="tour in allTours">
             <router-link :to="'/tours/'+ tour.slug">
               <ion-card class="tour-item" :class="{'inactive': !tour.isActive }">
-                <img alt="Silhouette of mountains" :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + tour.featuredImage" />
+                <img :alt="tour.title" :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + tour.featuredImage" />
                 <ion-card-header class="tour-item__header">
                   <ion-card-title class="tour-item__title">{{ tour.title }}</ion-card-title>
                   <ion-card-subtitle class="tour-item__subtitle">{{ tour.duration }}</ion-card-subtitle>
@@ -33,6 +33,32 @@
           <img class="section__img" src="/images/homepage-map.png" alt="Map">
         </div>
       </div>
+
+      <div>
+        <h2 style="margin-left: 15px; margin-bottom: 0; font-weight: 600; font-size: 1.6rem">Latest from our blog</h2>
+        <div v-if="isPostsLoaded">
+          <swiper :slides-per-view="1.4" :space-between="-20" :loop="true" :centered-slides="true">
+            <swiper-slide v-for="post in allPosts">
+              <ion-card class="post-item-list">
+                <router-link :to="'/dubrovnik-guide/'+ post.slug">
+                  <img v-if="post.featuredImage"
+                      :alt="post.title"
+                       style="height: 240px; object-fit: cover;"
+                      :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + post.featuredImage" />
+                  <img v-else
+                       :alt="post.title"
+                       style="height: 240px; object-fit: cover;"
+                       src="/images/no-image.jpg" />
+                  <ion-card-content class="post-item-list__content">
+                    <h2 class="post-item-list__subtitle">{{ post?.category?.title ? post?.category?.title : 'Undefined' }}</h2>
+                    <ion-card-title class="post-item-list__title">{{ post.title }}</ion-card-title>
+                  </ion-card-content>
+                </router-link>
+              </ion-card>
+            </swiper-slide>
+          </swiper>
+        </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -49,6 +75,10 @@ let tours = ref([])
 let allTours = []
 let isToursIsLoaded = false
 
+let posts = ref([])
+let allPosts = []
+let isPostsLoaded = false
+
 onMounted(async () => {
   console.log('Homepages')
   await axios
@@ -56,10 +86,15 @@ onMounted(async () => {
     .then(response => {
       tours = response.data['hydra:member']
       allTours = tours
-      setTimeout(() => {
-        isToursIsLoaded = true
-        console.log(allTours);
-      }, 500)
+      isToursIsLoaded = true
+  })
+
+  await axios
+    .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/posts?isPublish=true')
+    .then(response => {
+      posts = response.data['hydra:member']
+      allPosts = posts
+      isPostsLoaded = true
   })
 })
 </script>
@@ -96,4 +131,29 @@ onMounted(async () => {
   line-height: 130%;
 }
 .section__img {}
+
+.post-item-list {
+  text-align: left;
+}
+.post-item-list__header {}
+.post-item-list__content {
+  padding: 15px;
+  padding-top: 5px;
+}
+.post-item-list__title {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.post-item-list__subtitle {
+  margin-bottom: 5px !important;
+  display: block;
+  padding: 4px 8px;
+  background-color: #B82226;
+  color: #ffffff;
+  width: fit-content;
+  font-weight: 300;
+  font-size: .8rem !important;
+}
 </style>

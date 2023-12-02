@@ -12,8 +12,13 @@
     <ion-content :fullscreen="true" class="ion-padding">
       <div v-if="isPostLoaded">
         <h1>{{ post.title }}</h1>
-        <img :alt="post.title"
-             :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + post.featuredImage" />
+        <img v-if="post.featuredImage"
+            :alt="post.title"
+            :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + post.featuredImage" />
+        <img v-else
+             :alt="post.title"
+             style="object-fit: cover;"
+             src="/images/no-image.jpg" />
         <div v-html="post.content"></div>
       </div>
       <div v-else style="height: 100%; display: flex; align-items: center; justify-content: center;">
