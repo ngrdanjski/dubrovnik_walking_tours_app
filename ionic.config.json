@@ -1,0 +1,7 @@
+{
+  "name": "dwt",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
