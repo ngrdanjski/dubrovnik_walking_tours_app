@@ -5,30 +5,33 @@ import TabsPage from '../views/TabsPage.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
-  },
-  {
-    path: '/tabs/',
     component: TabsPage,
+    redirect: '/homepage',
     children: [
       {
-        path: '',
-        redirect: '/tabs/tab1'
+        path: '/homepage',
+        component: () => import('@/views/Homepage.vue')
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue')
+        path: 'private-tours',
+        component: () => import('@/views/PrivateTours.vue')
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
-      },
-      {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'dubrovnik-guide',
+        component: () => import('@/views/DubrovnikGuide.vue')
       }
     ]
-  }
+  },
+  {
+    path: '/tours/:slug',
+    name: 'Tour',
+    component: () => import('@/views/tour/Tour.vue')
+  },
+  {
+    path: '/dubrovnik-guide/:slug',
+    name: 'DubrovnikGuide',
+    component: () => import('@/views/dubrovnik-guide/DubrovnikGuide.vue')
+  },
 ]
 
 const router = createRouter({
