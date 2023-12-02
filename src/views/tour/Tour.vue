@@ -11,16 +11,29 @@
 
     <ion-content :fullscreen="true">
       <div v-if="isTourIsLoaded" class="tour">
-        <swiper :slides-per-view="1">
+        <swiper :slides-per-view="1.00">
           <swiper-slide>
-            <img :alt="singleTour.title"
-                 class="tour__img"
-                 :src="'https://127.0.0.1:8002/uploads/' + singleTour.featuredImage" />
+            <img
+              class="tour__img"
+              :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + singleTour.featuredImage"
+              alt=""
+            />
           </swiper-slide>
           <swiper-slide v-for="galleryItem in singleTour.mediaGallery">
-            <img class="tour__img"
-                 :src="'https://127.0.0.1:8002/uploads/' + galleryItem.src" />
+            <img
+                class="tour__img"
+                :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + galleryItem.src"
+                alt=""
+            />
           </swiper-slide>
+
+          <ion-icon
+              v-if="singleTour.mediaGallery.length > 0"
+              class="slider-icon"
+              aria-hidden="true"
+              :icon="swapHorizontalOutline"
+              slot="start"></ion-icon>
+
         </swiper>
         <div class="ion-padding">
           <div class="tour__duration" style="padding: 0; margin: 0">
@@ -37,15 +50,16 @@
       <div class="related-tours">
         <swiper :slides-per-view="1.1">
           <swiper-slide v-for="tour in relatedTours">
-            <ion-card class="tour-item" :class="{'inactive': !tour.isActive }">
-              <img alt="Silhouette of mountains" :src="'https://127.0.0.1:8002/uploads/' + tour.featuredImage" />
-              <ion-card-header class="tour-item__header">
-                <ion-card-title class="tour-item__title">{{ tour.title }}</ion-card-title>
-                <ion-card-subtitle class="tour-item__subtitle">{{ tour.duration }}</ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content class="tour-item__content">{{ tour?.shortDescription }}</ion-card-content>
-              <ion-button class="tour-item__view-more" fill="clear"><router-link :to="'/tours/'+ tour.slug" >View more</router-link></ion-button>
-            </ion-card>
+            <router-link :to="'/tours/'+ tour.slug">
+              <ion-card class="tour-item" :class="{'inactive': !tour.isActive }">
+                <img alt="Silhouette of mountains" :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + tour.featuredImage" />
+                <ion-card-header class="tour-item__header">
+                  <ion-card-title class="tour-item__title">{{ tour.title }}</ion-card-title>
+                  <ion-card-subtitle class="tour-item__subtitle">{{ tour.duration }}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content class="tour-item__content">{{ tour?.shortDescription }}</ion-card-content>
+              </ion-card>
+            </router-link>
           </swiper-slide>
         </swiper>
 
@@ -69,9 +83,6 @@
             <ion-button @click="cancel()">Cancel</ion-button>
           </ion-buttons>
           <ion-title>Book the tour</ion-title>
-          <ion-buttons slot="end">
-            <ion-button :strong="true" @click="confirm()">Confirm</ion-button>
-          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -183,7 +194,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { timerOutline } from 'ionicons/icons';
+import { timerOutline, swapHorizontalOutline } from 'ionicons/icons';
 
 let isTourIsLoaded = false
 const singleTour = {
@@ -219,7 +230,7 @@ let relatedTours = []
 
 onMounted(async () => {
   await axios
-    .get('https://127.0.0.1:8002/api/v1/tours?slug=' + route.params.slug)
+    .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/tours?slug=' + route.params.slug)
     .then(({data}) => {
       const responseTour = data['hydra:member'][0]
       console.log(responseTour);
@@ -237,7 +248,7 @@ onMounted(async () => {
       console.log('singleTour', singleTour)
 
       responseTour.relatedTours.forEach((tour) => {
-        axios.get('https://127.0.0.1:8002' + tour)
+        axios.get('https://phpstack-675879-4120349.cloudwaysapps.com' + tour)
           .then(function ({data}) {
             relatedTours.push(data)
           })
@@ -260,7 +271,10 @@ onMounted(async () => {
   z-index: 90;
 }
 .tour {}
-.tour__img {}
+.tour__img {
+  height: 260px !important;
+  object-fit: cover;
+}
 .tour__duration {
   margin-bottom: 10px !important;
   display: flex;
@@ -292,5 +306,16 @@ onMounted(async () => {
 .tour__list {
   margin: 0;
   padding: 0;
+}
+.slider-icon {
+  padding: 6px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  z-index: 90;
+  font-size: 1.4rem;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.60);
 }
 </style>

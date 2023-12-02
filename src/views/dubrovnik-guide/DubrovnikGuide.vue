@@ -13,7 +13,7 @@
       <div v-if="isPostLoaded">
         <h1>{{ post.title }}</h1>
         <img :alt="post.title"
-             :src="'https://127.0.0.1:8002/uploads/' + post.featuredImage" />
+             :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + post.featuredImage" />
         <div v-html="post.content"></div>
       </div>
       <div v-else style="height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -46,7 +46,7 @@ let isPostLoaded = false
 
 onMounted(async () => {
   await axios
-      .get('https://127.0.0.1:8002/api/v1/posts?slug=' + route.params.slug)
+      .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/posts?slug=' + route.params.slug)
       .then(({data}) => {
         const responsePost = data['hydra:member'][0]
 

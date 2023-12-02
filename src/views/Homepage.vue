@@ -9,7 +9,7 @@
           <swiper-slide v-for="tour in allTours">
             <router-link :to="'/tours/'+ tour.slug">
               <ion-card class="tour-item" :class="{'inactive': !tour.isActive }">
-                <img alt="Silhouette of mountains" :src="'https://127.0.0.1:8002/uploads/' + tour.featuredImage" />
+                <img alt="Silhouette of mountains" :src="'https://phpstack-675879-4120349.cloudwaysapps.com/uploads/' + tour.featuredImage" />
                 <ion-card-header class="tour-item__header">
                   <ion-card-title class="tour-item__title">{{ tour.title }}</ion-card-title>
                   <ion-card-subtitle class="tour-item__subtitle">{{ tour.duration }}</ion-card-subtitle>
@@ -25,12 +25,12 @@
         <div class="section section--left">
           <div class="section__title"><span class="section__title-red">7 days</span><br/>a week</div>
           <div class="section__description">We operate 7 days a week All tours start by the Big Onofrio's Fountain</div>
-          <img class="section__img" src="" alt="">
+          <img class="section__img" src="/images/homepage-red-umbrella.jpeg" alt="Red Umbrella">
         </div>
         <div class="section section--right">
           <div class="section__title"><span class="section__title-red">How to</span><br/>join us</div>
           <div class="section__description">Look for the red umbrella <br> with our sign</div>
-          <img class="section__img" src="" alt="">
+          <img class="section__img" src="/images/homepage-map.png" alt="Map">
         </div>
       </div>
     </ion-content>
@@ -52,7 +52,7 @@ let isToursIsLoaded = false
 onMounted(async () => {
   console.log('Homepages')
   await axios
-    .get('https://127.0.0.1:8002/api/v1/tours?isPublish=true')
+    .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/tours?isPublish=true')
     .then(response => {
       tours = response.data['hydra:member']
       allTours = tours

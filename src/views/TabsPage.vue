@@ -6,19 +6,19 @@
 
       <ion-tab-bar slot="bottom" class="dwt-tab-bar">
 
-        <ion-tab-button tab="tab1" href="/">
+        <ion-tab-button tab="homepage" href="/homepage">
           <ion-icon aria-hidden="true" :icon="eyeOutline" />
-          <ion-label>Tours</ion-label>
+          <ion-label style="font-weight: 700; font-size: .8rem">Tours</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab2" href="/private-tours">
+        <ion-tab-button tab="private-tours" href="/private-tours">
           <ion-icon aria-hidden="true" :icon="locateOutline" />
-          <ion-label>Scheduled Tours</ion-label>
+          <ion-label style="font-weight: 700; font-size: .8rem">Scheduled Tours</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab3" href="/dubrovnik-guide">
+        <ion-tab-button tab="dubrovnik-guide" href="/dubrovnik-guide">
           <ion-icon aria-hidden="true" :icon="newspaperOutline" />
-          <ion-label>Dubrovnik guide</ion-label>
+          <ion-label style="font-weight: 700; font-size: .8rem">Guide</ion-label>
         </ion-tab-button>
 
       </ion-tab-bar>
@@ -33,7 +33,7 @@ import { eyeOutline, newspaperOutline, locateOutline } from 'ionicons/icons';
 
 <style>
 .dwt-tab-bar {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 </style>

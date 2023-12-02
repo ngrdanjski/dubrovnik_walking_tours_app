@@ -25,7 +25,7 @@ let isToursIsLoaded = false
 
 onMounted(async () => {
   await axios
-      .get('https://127.0.0.1:8002/api/v1/posts?isPublish=true')
+      .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/posts?isPublish=true')
       .then(response => {
         tours = response.data['hydra:member']
         allTours = tours

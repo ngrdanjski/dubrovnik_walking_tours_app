@@ -10,14 +10,17 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/homepage',
+        name: 'homepage',
         component: () => import('@/views/Homepage.vue')
       },
       {
         path: 'private-tours',
+        name: 'private-tours',
         component: () => import('@/views/PrivateTours.vue')
       },
       {
         path: 'dubrovnik-guide',
+        name: 'dubrovnik-guide',
         component: () => import('@/views/DubrovnikGuide.vue')
       }
     ]
