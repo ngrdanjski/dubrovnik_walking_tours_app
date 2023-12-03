@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'dubrovnik-guide',
         name: 'dubrovnik-guide',
         component: () => import('@/views/DubrovnikGuide.vue')
+      },
+      {
+        path: 'contact',
+        name: 'contact',
+        component: () => import('@/views/Contact.vue')
       }
     ]
   },

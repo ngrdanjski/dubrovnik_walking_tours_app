@@ -15,7 +15,7 @@
                   <ion-card-subtitle class="tour-item__subtitle">{{ tour.duration }}</ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content class="tour-item__content">{{ tour?.shortDescription.substring(0, 64)+"..." }}</ion-card-content>
-                <div class="tour-item__price-wrapper">{{ tour?.price }} €</div>
+                <div class="tour-item__price-wrapper">{{ tour?.price }}€</div>
               </ion-card>
             </router-link>
           </swiper-slide>
