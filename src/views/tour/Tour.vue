@@ -67,17 +67,22 @@
             <div class="tour__description" v-html="singleTour.description"></div>
           </div>
         </div>
-        <ion-grid class="testimonials">
-          <ion-row>
+        <ion-grid class="testimonials ion-padding-vertical">
+          <ion-row class="ion-text-center">
             <ion-col>
-              <h3>What people say</h3>
+              <img src="/images/ta-small.png" alt="">
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row class="ion-text-center">
             <ion-col>
-              <ul>
-                <li v-for="testimonial in allTestimonials">{{ testimonial.title }}</li>
-              </ul>
+              <swiper :slides-per-view="1">
+                <swiper-slide v-for="testimonial in allTestimonials">
+                  <div class="testimonial-item">
+                    <h3 class="testimonial-item__title"> {{ testimonial.title }}</h3>
+                    <div class="testimonial-item__author">{{ testimonial.author }}</div>
+                  </div>
+                </swiper-slide>
+              </swiper>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -227,7 +232,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { timerOutline, swapHorizontalOutline, starSharp } from 'ionicons/icons';
+import { swapHorizontalOutline, starSharp } from 'ionicons/icons';
 
 let isTourIsLoaded = false
 const singleTour = {
@@ -263,44 +268,44 @@ const onWillDismiss = (ev: CustomEvent<OverlayEventDetail>) => {
   }
 };
 
-let relatedTours  = Object<[]>
-let allTestimonials = Object<[]>
+let relatedTours  = []
+let allTestimonials = []
 let isTestimonialsLoaded = false
 
 onMounted(async () => {
   await axios
-    .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/tours?slug=' + route.params.slug)
-    .then(({data}) => {
-      const responseTour = data['hydra:member'][0]
-      singleTour.title = responseTour.title
-      singleTour.fullTitle = responseTour.fullTitle
-      singleTour.featuredImage = responseTour.featuredImage
-      singleTour.mediaGallery = responseTour.mediaGallery
-      singleTour.shortDescription = responseTour.shortDescription
-      singleTour.description = responseTour.description
-      singleTour.duration = responseTour.duration
-      singleTour.price = responseTour.price
-      singleTour.departure = responseTour.departure
-      singleTour.rating = responseTour.rating
-      singleTour.ratingText = responseTour.ratingText
+      .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/tours?slug=' + route.params.slug)
+      .then(({data}) => {
+        const responseTour = data['hydra:member'][0]
+        singleTour.title = responseTour.title
+        singleTour.fullTitle = responseTour.fullTitle
+        singleTour.featuredImage = responseTour.featuredImage
+        singleTour.mediaGallery = responseTour.mediaGallery
+        singleTour.shortDescription = responseTour.shortDescription
+        singleTour.description = responseTour.description
+        singleTour.duration = responseTour.duration
+        singleTour.price = responseTour.price
+        singleTour.departure = responseTour.departure
+        singleTour.rating = responseTour.rating
+        singleTour.ratingText = responseTour.ratingText
 
-      isTourIsLoaded = true
+        isTourIsLoaded = true
 
-      // responseTour.relatedTours.forEach((tour) => {
-      //   axios.get('https://phpstack-675879-4120349.cloudwaysapps.com' + tour)
-      //     .then(function ({data}) {
-      //       relatedTours = [...relatedTours, ...data]
-      //     })
-      // })
-  })
+        responseTour.relatedTours.forEach((tour) => {
+          axios.get('https://phpstack-675879-4120349.cloudwaysapps.com' + tour)
+              .then(function ({data}) {
+                relatedTours.push(data)
+              })
+        })
+      })
 
   axios.get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/testimonials')
-    .then(function ({data}) {
-      allTestimonials = data['hydra:member']
-      isTestimonialsLoaded = true
-    })
-    .catch(function (error) {console.log(error);})
-    .finally(function () {});
+      .then(function ({data}) {
+        allTestimonials = data['hydra:member']
+        isTestimonialsLoaded = true
+      })
+      .catch(function (error) {console.log(error);})
+      .finally(function () {});
 })
 </script>
 
@@ -334,7 +339,7 @@ onMounted(async () => {
   margin-left: 5px;
 }
 .tour__description {
-  //padding-bottom: 90px;
+//padding-bottom: 90px;
   font-size: 1.2rem;
   font-weight: 300;
   line-height: 140%;
@@ -349,7 +354,7 @@ onMounted(async () => {
 }
 .tour__subtitle {}
 .related-tours {
-  //padding-bottom: 15px;
+//padding-bottom: 15px;
 }
 .tour__list {
   margin: 0;
@@ -399,6 +404,7 @@ onMounted(async () => {
   background-color: rgba(13, 13, 13, 0.30);
 }
 .testimonials {
-  background-color: #f6f6f6;
+  padding-top: 45px;
+  padding-bottom: 30px;
 }
 </style>
