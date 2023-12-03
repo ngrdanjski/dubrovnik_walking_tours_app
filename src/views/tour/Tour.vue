@@ -263,10 +263,8 @@ const onWillDismiss = (ev: CustomEvent<OverlayEventDetail>) => {
   }
 };
 
-let relatedTours = []
-
-let testimonials = ref([])
-let allTestimonials = []
+let relatedTours  = Object<[]>
+let allTestimonials = Object<[]>
 let isTestimonialsLoaded = false
 
 onMounted(async () => {
@@ -274,8 +272,6 @@ onMounted(async () => {
     .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/tours?slug=' + route.params.slug)
     .then(({data}) => {
       const responseTour = data['hydra:member'][0]
-      console.log(responseTour);
-
       singleTour.title = responseTour.title
       singleTour.fullTitle = responseTour.fullTitle
       singleTour.featuredImage = responseTour.featuredImage
@@ -290,16 +286,12 @@ onMounted(async () => {
 
       isTourIsLoaded = true
 
-      console.log('singleTour', singleTour)
-
-      responseTour.relatedTours.forEach((tour) => {
-        axios.get('https://phpstack-675879-4120349.cloudwaysapps.com' + tour)
-          .then(function ({data}) {
-            relatedTours.push(data)
-          })
-          .catch(function (error) {console.log(error);})
-          .finally(function () {});
-      })
+      // responseTour.relatedTours.forEach((tour) => {
+      //   axios.get('https://phpstack-675879-4120349.cloudwaysapps.com' + tour)
+      //     .then(function ({data}) {
+      //       relatedTours = [...relatedTours, ...data]
+      //     })
+      // })
   })
 
   axios.get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/testimonials')

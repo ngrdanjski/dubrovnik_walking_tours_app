@@ -17,9 +17,8 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle } from '@ionic/vue';
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 
-let posts = ref([])
 let allPosts = []
 let isPostsLoaded = false
 
@@ -27,8 +26,7 @@ onMounted(async () => {
   await axios
       .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/posts?isPublish=true')
       .then(response => {
-        posts = response.data['hydra:member']
-        allPosts = posts
+        allPosts = response.data['hydra:member']
         setTimeout(() => {
           isPostsLoaded = true
           console.log(allPosts);

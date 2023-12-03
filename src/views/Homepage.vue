@@ -66,37 +66,31 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { IonPage, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/vue';
-import { onMounted, ref } from "vue";
+import { IonPage, IonContent, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/vue';
+import { onMounted } from "vue";
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
-let tours = ref([])
 let allTours = []
 let isToursIsLoaded = false
 
-let posts = ref([])
 let allPosts = []
 let isPostsLoaded = false
-
-
 
 onMounted(async () => {
   console.log('Homepages')
   await axios
     .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/tours?isPublish=true')
     .then(response => {
-      tours = response.data['hydra:member']
-      allTours = tours
+      allTours = response.data['hydra:member']
       isToursIsLoaded = true
   })
 
   await axios
     .get('https://phpstack-675879-4120349.cloudwaysapps.com/api/v1/posts?isPublish=true')
     .then(response => {
-      posts = response.data['hydra:member']
-      allPosts = posts
+      allPosts = response.data['hydra:member']
       isPostsLoaded = true
   })
 })
